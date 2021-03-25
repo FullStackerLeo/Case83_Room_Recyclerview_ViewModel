@@ -1,4 +1,4 @@
-package com.hypech.case83_room;
+package com.hypech.case83_room.entity;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -17,14 +17,14 @@ import androidx.room.PrimaryKey;
  */
 
 @Entity(tableName = "word_table")
-public class EntityWord {
+public class Word {
 
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "word")
     private String mWord;
 
-    public EntityWord(@NonNull String word) {
+    public Word(@NonNull String word) {
         this.mWord = word;
     }
 

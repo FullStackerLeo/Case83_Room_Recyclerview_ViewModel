@@ -1,4 +1,4 @@
-package com.hypech.case83_room.L_RecyclerView;
+package com.hypech.case83_room.recycler_view;
 
 import android.view.LayoutInflater;
 import android.view.View;

@@ -10,26 +10,33 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.hypech.case83_room.L_RecyclerView.AdapterWordList;
+import com.hypech.case83_room.entity.Word;
+import com.hypech.case83_room.recycler_view.AdapterWordList;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
-
-    private ViewModelWord mWordViewModel;
+    private L_ViewModel mWordViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //1.1. 引入 RecyclerView
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
+
+        //1.2. 引入 Adapter
         final AdapterWordList adapter = new AdapterWordList(new AdapterWordList.WordDiff());
+
+        //1.3. 连接RecyclerView和Adapter
         recyclerView.setAdapter(adapter);
+
+        //1.4. 定义RecyclerView的Layout
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Get a new or existing ViewModel from the ViewModelProvider.
-        mWordViewModel = new ViewModelProvider(this).get(ViewModelWord.class);
+        //2.1 ViewModel
+        mWordViewModel = new ViewModelProvider(this).get(L_ViewModel.class);
 
         // Add an observer on the LiveData returned by getAlphabetizedWords.
         // The onChanged() method fires when the observed data changes and the activity is
@@ -50,12 +57,11 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            EntityWord word = new EntityWord(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
+            Word word = new Word(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
             mWordViewModel.insert(word);
         } else {
             Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_not_saved,
+                    getApplicationContext(), R.string.empty_not_saved,
                     Toast.LENGTH_LONG).show();
         }
     }
